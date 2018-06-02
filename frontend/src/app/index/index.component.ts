@@ -8,25 +8,49 @@ import { ActivityService } from '../activity.service';
 })
 export class IndexComponent implements OnInit {
 
-    dates: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    daynames: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    activities: Activity[];
+    days = [];
     currentDate: Date = new Date;
-    firstDayDate: Date = new Date;
+
+    relativeWeek: number = 0;
+
+    // Used for adding or removing a week from a timestamp.
+    weeksToMilliSeconds = (modifier: number) => 60 * 60 * 24 * modifier * 1000;
 
     constructor(private _activityService: ActivityService) {
-        this.firstDayDate.setDate(this.firstDayDate.getDate() - this.firstDayDate.getDay());
+        this.setupDays();
     }
 
-    ngOnInit() {
+    setupDays(): void {
+        let firstDayDate = new Date();
+        firstDayDate.setDate(firstDayDate.getDate() - firstDayDate.getDay());
+
+        for (let i = 0; i < 7; i++) {
+            this.days.push({
+                name: this.daynames[i],
+                date: new Date(),
+                activities: []
+            });
+
+            this.days[i].date.setTime(firstDayDate.getTime() + this.weeksToMilliSeconds(i));
+        }
+    }
+
+    ngOnInit(): void {
         this.getActivities();
+
+        previousWeek.onclick = () => this.changeWeek(-1);
+        nextWeek.onclick = () => this.changeWeek(1);
     }
 
-    nextWeek(): void {
-        this.firstDayDate.setDate(this.firstDayDate.getDate() + 7);
+    changeWeek(modifier: number): void {
+        for (let day in this.days)
+            this.days[day].date.setTime(this.days[day].date.getTime() + this.weeksToMilliSeconds(modifier * 7);
     }
 
     getActivities(): void {
-        this.activities = this._activityService.getActivities(this.firstDayDate);
+        for (let day in this.days)
+            this.days[day].activities = this._activityService.getActivities(this.days[day].date);
     }
 }

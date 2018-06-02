@@ -3,6 +3,7 @@ export class Activity {
     title: string;
     description: string;
 
-    startingTime: Date;
-    endTime: Date;
+    // @todo Replace with Date
+    startingTime: string;
+    endTime: string;
 }
