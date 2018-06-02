@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
+import { ActivityEditorComponent } from './activity-editor/activity-editor.component';
 
 const routes: Routes = [
     {
@@ -14,13 +15,18 @@ const routes: Routes = [
     {
         path: 'index',
         component: IndexComponent
+    },
+    {
+        path: 'new',
+        component: ActivityEditorComponent
     }
 ];
 
 @NgModule({
     declarations: [
         AppComponent,
-        IndexComponent
+        IndexComponent,
+        ActivityEditorComponent
     ],
     imports: [
         BrowserModule,

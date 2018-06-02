@@ -10,6 +10,10 @@ export class AppComponent {
         {
             label: "Home",
             href: ""
+        },
+        {
+            label: "New activity",
+            href: "/new"
         }
     ];
 }
