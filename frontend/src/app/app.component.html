@@ -1,7 +1,13 @@
-<ul id="top-bar" class="nav">
-    <li class="nav-item" *ngFor="let item of menuItems"><a class="nav-link" routerLink="{{ item.href }}">{{ item.label }}</a></li>
-</ul>
+<div id="wrapper">
+    <ul id="top-bar" class="nav">
+        <li class="nav-item" *ngFor="let item of menuItems"><a class="nav-link" routerLink="{{ item.href }}">{{ item.label }}</a></li>
+    </ul>
 
-<div id="page-content" class="container-fluid">
-    <router-outlet></router-outlet>
+    <div id="header">
+        Activity planner
+    </div>
+
+    <div id="page-content" class="container-fluid">
+        <router-outlet></router-outlet>
+    </div>
 </div>

@@ -15,7 +15,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm day" *ngFor="let day of days">
-            <h3>{{ day.name }} <strong>{{ day.date.getMonth() + 1 }}/{{ day.date.getDate() }}</strong></h3>
+            <h4>{{ day.name }} <strong>{{ day.date.getMonth() + 1 }}/{{ day.date.getDate() }}</strong></h4>
 
             <div class="activity" *ngFor="let activity of day.activities">
                 <strong>{{ activity.startingTime }} - {{ activity.endTime }}</strong><br />
@@ -26,5 +26,5 @@
 </div>
 
 <div class="btn-group-sm mt-sm-4">
-    <button type="button" class="btn btn-primary" routerLink="/new">Add new</button>
+    <button type="button" class="btn btn-light" routerLink="/new">Add activity</button>
 </div>

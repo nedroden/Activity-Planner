@@ -1,14 +1,15 @@
-.day h3 {
+/* Calendar styles */
+.day h4 {
     text-align: right;
 }
 
-.day h3, .day .activity {
-    margin: 5px;
+.day .activity {
+    margin-bottom: 5px;
 }
 
 .day .activity {
-    font-size: 80%;
-    background: #479ec6;
+    font-size: 85%;
+    background: #779b78;
     color: #fff;
     padding: 5px;
 }

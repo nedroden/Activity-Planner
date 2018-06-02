@@ -46,7 +46,7 @@ export class IndexComponent implements OnInit {
 
     changeWeek(modifier: number): void {
         for (let day in this.days)
-            this.days[day].date.setTime(this.days[day].date.getTime() + this.weeksToMilliSeconds(modifier * 7);
+            this.days[day].date.setTime(this.days[day].date.getTime() + this.weeksToMilliSeconds(modifier * 7));
     }
 
     getActivities(): void {
