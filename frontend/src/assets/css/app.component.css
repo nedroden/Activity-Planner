@@ -13,6 +13,7 @@
     background: url('../images/header.jpg') repeat-x;
     background-size: 100% auto;
     background-position: 0% 15%;
+    text-shadow: 2px 2px #333333;
 }
 
 /* Navigation bar */
@@ -23,6 +24,7 @@
 
 #top-bar .nav-link {
     color: #636363;
+    text-shadow: 2px 2px #dcdcdc;
 }
 
 /* Content styles */
