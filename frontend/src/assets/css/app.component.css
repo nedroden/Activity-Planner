@@ -1,0 +1,16 @@
+/* Navigation bar */
+#top-bar {
+    background: linear-gradient(180deg, #f4f4f4, #e8e9ea);
+    border-bottom: 1px solid #cccccc;
+}
+
+/* Content styles */
+#page-content {
+    padding: 15px;
+    width: 65%;
+    margin: auto;
+    background: #fcfcfc;
+    border-color: #cccccc;
+    border-style: solid;
+    border-width: 0 1px 1px 1px;
+}
