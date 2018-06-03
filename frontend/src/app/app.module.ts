@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
 import { ActivityEditorComponent } from './activity-editor/activity-editor.component';
@@ -35,7 +37,8 @@ const routes: Routes = [
             {
                 enableTracing: false
             }
-        )
+        ),
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -1,48 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Activity } from './activity';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ActivityService {
 
-    constructor() { }
+    constructor(private _http: HttpClient) { }
 
-    public getActivities(date: Date): Activity[] {
-        let activities: Activity[] = [];
-
-        switch (date.getDay()) {
-            case 0:
-                activities.push({
-                    id: 0,
-                    title: "Recover from hangover",
-                    description: "Recovering from a hangover.",
-
-                    startingTime: "10:00",
-                    endTime: "15:00"
-                });
-                break;
-            case 1:
-                activities.push({
-                    id: 0,
-                    title: "Give a presentation",
-                    description: "I need to give a presentation",
-
-                    startingTime: "14:00",
-                    endTime: "15:00"
-                });
-
-                activities.push({
-                    id: 0,
-                    title: "Go to the shopping mall",
-                    description: "I should probably go to the shopping mall",
-
-                    startingTime: "15:00",
-                    endTime: "17:00"
-                });
-                break;
-        }
-
-        return activities;
+    public getActivities(date: Date): Observable<Activity[]> {
+        return this._http.get<Activity[]>('http://localhost:8000/activities/2018-06-03');
     }
 }

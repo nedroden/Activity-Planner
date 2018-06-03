@@ -4,6 +4,6 @@ export class Activity {
     description: string;
 
     // @todo Replace with Date
-    startingTime: string;
-    endTime: string;
+    starts_at: string;
+    ends_at: string;
 }

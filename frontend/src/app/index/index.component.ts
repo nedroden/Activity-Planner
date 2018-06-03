@@ -11,7 +11,6 @@ export class IndexComponent implements OnInit {
     daynames: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     days = [];
-    currentDate: Date = new Date;
 
     relativeWeek: number = 0;
 
@@ -38,7 +37,7 @@ export class IndexComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getActivities();
+        this.updateSubscriptions();
 
         document.getElementById('previousWeek').onclick = () => this.changeWeek(-1);
         document.getElementById('nextWeek').onclick = () => this.changeWeek(1);
@@ -47,10 +46,18 @@ export class IndexComponent implements OnInit {
     changeWeek(modifier: number): void {
         for (let day in this.days)
             this.days[day].date.setTime(this.days[day].date.getTime() + this.weeksToMilliSeconds(modifier * 7));
+
+        this.updateSubscriptions();
     }
 
-    getActivities(): void {
-        for (let day in this.days)
-            this.days[day].activities = this._activityService.getActivities(this.days[day].date);
+    updateSubscriptions(): void {
+        for (let day of this.days)
+            this._activityService.getActivities(day.date).subscribe(activities => day.activities = activities);
+
+/*        this._activityService.getActivities(this.days[0].date).subscribe(activities => this.days[0].activities = activities);
+        this._activityService.getActivities(this.days[1].date).subscribe(activities => this.days[1].activities = activities);
+        this._activityService.getActivities(this.days[2].date).subscribe(activities => this.days[2].activities = activities);
+        this._activityService.getActivities(this.days[3].date).subscribe(activities => this.days[3].activities = activities);
+        this._activityService.getActivities(this.days[4].date).subscribe(activities => this.days[4].activities = activities);*/
     }
 }
