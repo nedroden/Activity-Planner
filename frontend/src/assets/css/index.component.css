@@ -5,11 +5,15 @@
 
 .day .activity {
     margin-bottom: 5px;
-}
-
-.day .activity {
     font-size: 85%;
     background: #779b78;
-    color: #fff;
+    color: #e3f7e4;
     padding: 5px;
+}
+
+.day .activity:hover {
+    background: #9cba9d;
+    cursor: pointer;
+    transition: background 0.5s;
+    -moz-transition: background 0.5s;
 }

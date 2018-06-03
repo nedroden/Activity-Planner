@@ -1,0 +1,29 @@
+.form-group {
+    border: 1px solid #dedede;
+}
+
+.form-group label {
+    color: #444444;
+    padding: 10px;
+    background: #efefef;
+    width: 100%;
+    margin: 0;
+}
+
+.form-group input {
+    font-size: 130%;
+}
+
+.form-group input, .form-group textarea {
+    border: 0;
+    padding: 5px;
+}
+
+.form-group input:hover, .form-group textarea:hover, .form-group input:focus, .form-group textarea:focus {
+    border: 0;
+    box-shadow: none;
+}
+
+.form-group div {
+    padding: 10px;
+}

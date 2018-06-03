@@ -40,8 +40,8 @@ export class IndexComponent implements OnInit {
     ngOnInit(): void {
         this.getActivities();
 
-        previousWeek.onclick = () => this.changeWeek(-1);
-        nextWeek.onclick = () => this.changeWeek(1);
+        document.getElementById('previousWeek').onclick = () => this.changeWeek(-1);
+        document.getElementById('nextWeek').onclick = () => this.changeWeek(1);
     }
 
     changeWeek(modifier: number): void {
