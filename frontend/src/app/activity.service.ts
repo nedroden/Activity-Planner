@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, interval, pipe } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 import { Activity } from './activity';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -11,6 +12,9 @@ export class ActivityService {
     constructor(private _http: HttpClient) { }
 
     public getActivities(date: Date): Observable<Activity[]> {
-        return this._http.get<Activity[]>('http://localhost:8000/activities/2018-06-03');
+        return interval(500)
+        .pipe(
+            switchMap(() => this._http.get<Activity[]>('http://localhost:8000/activities/' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()))
+        );
     }
 }

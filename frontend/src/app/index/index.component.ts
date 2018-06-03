@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Activity } from '../activity';
 import { ActivityService } from '../activity.service';
 
+import { Observable } from "rxjs";
+
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html'
@@ -52,7 +54,7 @@ export class IndexComponent implements OnInit {
 
     updateSubscriptions(): void {
         for (let day of this.days)
-            this._activityService.getActivities(day.date).subscribe(activities => day.activities = activities);
+           this._activityService.getActivities(day.date).subscribe(activities => day.activities = activities);
 
 /*        this._activityService.getActivities(this.days[0].date).subscribe(activities => this.days[0].activities = activities);
         this._activityService.getActivities(this.days[1].date).subscribe(activities => this.days[1].activities = activities);
