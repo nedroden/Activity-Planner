@@ -55,11 +55,5 @@ export class IndexComponent implements OnInit {
     updateSubscriptions(): void {
         for (let day of this.days)
            this._activityService.getActivities(day.date).subscribe(activities => day.activities = activities);
-
-/*        this._activityService.getActivities(this.days[0].date).subscribe(activities => this.days[0].activities = activities);
-        this._activityService.getActivities(this.days[1].date).subscribe(activities => this.days[1].activities = activities);
-        this._activityService.getActivities(this.days[2].date).subscribe(activities => this.days[2].activities = activities);
-        this._activityService.getActivities(this.days[3].date).subscribe(activities => this.days[3].activities = activities);
-        this._activityService.getActivities(this.days[4].date).subscribe(activities => this.days[4].activities = activities);*/
     }
 }
