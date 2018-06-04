@@ -27,3 +27,15 @@
 .form-group div {
     padding: 10px;
 }
+
+.form-group div {
+    display: flex;
+}
+
+.form-group div input[type="date"] {
+    width: auto;
+}
+
+.form-group div input.time-input {
+    width: 80px;
+}

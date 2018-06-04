@@ -1,8 +1,8 @@
-<h2>Edit activity</h2>
+<h2>{{ isNewArticle ? 'New' : 'Edit' }} activity</h2>
 <div class="container-fluid">
     <div class="row">
         <div class="mt-sm-3 col-12">
-            <form>
+            <form id="editor" (submit)="saveActivity()">
                 <div class="float-left col-md-5">
                     <div class="form-group">
                         <label for="titleInput">Activity title</label>
@@ -22,6 +22,7 @@
                         <label for="startingDateInput">Starting date</label>
                         <div>
                             <input type="date" class="form-control" id="startingDateInput" value="{{ isNewArticle ? '' : activity.start_date_value }}" />
+                            <input type="text" class="form-control time-input" id="startTimeInput" placeholder="00:00" maxlength="5" />
                         </div>
                     </div>
 
@@ -29,6 +30,7 @@
                         <label for="endDateInput">End date</label>
                         <div>
                             <input type="date" class="form-control" id="endDateInput" value="{{ isNewArticle ? '' : activity.start_date_value }}" />
+                            <input type="text" class="form-control time-input" id="endTimeInput" placeholder="00:00" maxlength="5" />
                         </div>
                     </div>
                 </div>
@@ -46,7 +48,7 @@
 
                 <div class="btn-group mt-sm-3">
                     <button type="button" class="btn btn-light" routerLink="/index">Back to index</button>
-                    <button type="button" class="btn btn-primary">Save activity</button>
+                    <button type="submit" class="btn btn-primary">Save activity</button>
                 </div>
             </form>
         </div>

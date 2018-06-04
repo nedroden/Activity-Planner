@@ -37,4 +37,9 @@ export class ActivityEditorComponent implements OnInit {
             });
         }
     }
+
+    saveActivity(): void {
+        alert('hi');
+        //alert(document.getElementById('titleInput').value);
+    }
 }
