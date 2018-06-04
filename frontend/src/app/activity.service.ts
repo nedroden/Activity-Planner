@@ -13,8 +13,12 @@ export class ActivityService {
 
     public getActivities(date: Date): Observable<Activity[]> {
         return interval(500)
-        .pipe(
-            concatMap(() => this._http.get<Activity[]>('http://localhost:8000/activities/' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()))
-        );
+            .pipe(
+                concatMap(() => this._http.get<Activity[]>('http://localhost:8000/activities/' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()))
+            );
+    }
+
+    public getActivity(id: number): Observable<Activity> {
+        return this._http.get<Activity>('http://localhost:8000/activity/' + id);
     }
 }

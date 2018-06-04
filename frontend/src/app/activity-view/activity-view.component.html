@@ -1,0 +1,27 @@
+<div class="col-sm-3">
+    <div class="card">
+        <img class="card-img-top" src="http://wallpoper.com/images/00/36/08/11/green-abstract_00360811.jpg" alt="{{ activity.title }}" />
+
+        <div class="card-body">
+            <h5 class="card-title">{{ activity.title }}</h5>
+            <p class="card-text">{{ activity.description }}</p>
+        </div>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Location:</strong> {{ activity.location }}</li>
+            <li class="list-group-item">
+                <strong>Starts at:</strong>
+                {{ activity.starts_at.toLocaleString() }}
+            </li>
+            <li class="list-group-item">
+                <strong>Ends at:</strong>
+                {{ activity.ends_at.toLocaleString() }}
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="btn-group-sm mt-sm-4">
+    <button type="button" class="btn btn-light" routerLink="/">Back to index</button>
+    <button type="button" class="btn btn-light" routerLink="/activity/{{ id }}/edit">Edit</button>
+</div>

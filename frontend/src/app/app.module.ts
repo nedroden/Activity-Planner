@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
 import { ActivityEditorComponent } from './activity-editor/activity-editor.component';
+import { ActivityViewComponent } from './activity-view/activity-view.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,20 @@ const routes: Routes = [
     {
         path: 'new',
         component: ActivityEditorComponent
+    },
+    {
+        path: 'activity/:id',
+        children: [
+            {
+                path: '',
+                pathMatch: 'full',
+                component: ActivityViewComponent
+            },
+            {
+                path: 'edit',
+                component: ActivityEditorComponent
+            }
+        ]
     }
 ];
 
@@ -28,7 +43,8 @@ const routes: Routes = [
     declarations: [
         AppComponent,
         IndexComponent,
-        ActivityEditorComponent
+        ActivityEditorComponent,
+        ActivityViewComponent
     ],
     imports: [
         BrowserModule,

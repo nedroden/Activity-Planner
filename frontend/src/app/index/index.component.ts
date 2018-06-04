@@ -54,6 +54,17 @@ export class IndexComponent implements OnInit {
 
     updateSubscriptions(): void {
         for (let day of this.days)
-           this._activityService.getActivities(day.date).subscribe(activities => day.activities = activities);
+           this._activityService.getActivities(day.date).subscribe(activities => {
+            for (let activity of activities) {
+                let startsAt = new Date(activity.starts_at);
+                let endsAt = new Date(activity.ends_at);
+
+                // Credits to https://stackoverflow.com/questions/8043026/how-to-format-numbers-by-prepending-0-to-single-digit-numbers#8043061
+                activity.start = ('0' + startsAt.getHours()).slice(-2) + ':' + ('0' + startsAt.getMinutes()).slice(-2);
+                activity.end = ('0' + endsAt.getHours()).slice(-2) + ':' + ('0' + endsAt.getMinutes()).slice(-2);
+            }
+
+            day.activities = activities;
+        });
     }
 }

@@ -17,8 +17,8 @@
         <div class="col-sm day" *ngFor="let day of days">
             <h4>{{ day.name }} <strong>{{ day.date.getMonth() + 1 }}/{{ day.date.getDate() }}</strong></h4>
 
-            <div class="activity" *ngFor="let activity of day.activities" routerLink="/new">
-                <strong>{{ activity.starts_at }} - {{ activity.ends_at }}</strong><br />
+            <div class="activity" *ngFor="let activity of day.activities" routerLink="/activity/{{ activity.id }}">
+                <strong>{{ activity.start }} - {{ activity.end }}</strong><br />
                 {{ activity.title }}
             </div>
         </div>
