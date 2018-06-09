@@ -12,7 +12,7 @@ export class ActivityService {
     constructor(private _http: HttpClient) { }
 
     public getActivities(date: Date): Observable<Activity[]> {
-        return interval(2000)
+        return interval(5000)
             .pipe(
                 concatMap(() => this._http.get<Activity[]>('http://localhost:8000/activities/' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()))
             );
@@ -31,12 +31,7 @@ export class ActivityService {
 
         let url = id == -1 ? '/activities' : '/activity/' + id;
 
-        this._http.post('http://localhost:8000' + url,
-            payload,
-            {
-                headers: headers 
-            }
-        ).subscribe(response => callback(response));
+        this._http.post('http://localhost:8000' + url, payload, {headers: headers}).subscribe(response => callback(response));
 
         return true;
     }
