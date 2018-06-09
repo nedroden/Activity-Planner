@@ -15,7 +15,9 @@ export class ActivityEditorComponent implements OnInit {
     isNewArticle: boolean = true;
 
     constructor(private _activityService: ActivityService,
-                private _activatedRoute: ActivatedRoute) { }
+                private _activatedRoute: ActivatedRoute) {
+        this.id = -1;
+    }
 
     ngOnInit() {
         this._activatedRoute.params.subscribe(params => {
@@ -36,10 +38,15 @@ export class ActivityEditorComponent implements OnInit {
                 this.activity = activity;
             });
         }
+
+        document.getElementById('submit_form').addEventListener('click', e => {
+            e.preventDefault()
+            this.saveActivity(e);
+        });
     }
 
-    saveActivity(): void {
-        alert('hi');
-        //alert(document.getElementById('titleInput').value);
+    saveActivity(e): void {
+        let fields = ['title', 'location', 'startingDate', 'startingTime', 'endDate', 'endTime', 'description'];
+        this._activityService.update(this.id, fields, (result) => console.log(result));
     }
 }

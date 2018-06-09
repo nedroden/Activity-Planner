@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="mt-sm-3 col-12">
-            <form id="editor" (submit)="saveActivity()">
+            <form id="editor" (submit)="saveActivity(event)">
                 <div class="float-left col-md-5">
                     <div class="form-group">
                         <label for="titleInput">Activity title</label>
@@ -22,7 +22,7 @@
                         <label for="startingDateInput">Starting date</label>
                         <div>
                             <input type="date" class="form-control" id="startingDateInput" value="{{ isNewArticle ? '' : activity.start_date_value }}" />
-                            <input type="text" class="form-control time-input" id="startTimeInput" placeholder="00:00" maxlength="5" />
+                            <input type="text" class="form-control time-input" id="startingTimeInput" placeholder="00:00" maxlength="5" />
                         </div>
                     </div>
 
@@ -48,7 +48,7 @@
 
                 <div class="btn-group mt-sm-3">
                     <button type="button" class="btn btn-light" routerLink="/index">Back to index</button>
-                    <button type="submit" class="btn btn-primary">Save activity</button>
+                    <button id="submit_form" type="submit" class="btn btn-primary">Save activity</button>
                 </div>
             </form>
         </div>

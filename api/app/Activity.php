@@ -12,6 +12,8 @@ class Activity extends Model
         'starts_at', 'ends_at'
     ];
 
+    public $timestamps = false;
+
     public function attachments()
     {
         return $this->hasMany(Attachment::class);

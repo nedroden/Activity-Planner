@@ -15,10 +15,16 @@ class API
      */
     public function handle($request, Closure $next)
     {
-        // Credits to Balazs Szabo at https://stackoverflow.com/questions/40934415/cross-origin-request-blocked-issue-on-sending-headers-in-angular2-post-request
-        return $next($request)
-            ->header('Access-Control-Allow-Origin', '*')
-            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-            ->header('Access-Control-Allow-Headers', '*');
+        $response = $next($request);
+
+        /*$response->header('Access-Control-Allow-Origin', '*');
+        $response->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+        $response->header('Access-Control-Allow-Headers', '*');*/
+
+/*        header("Access-Control-Allow-Origin: *");
+        header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+        header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');*/
+
+        return $response;
     }
 }

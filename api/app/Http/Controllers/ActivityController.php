@@ -10,9 +10,9 @@ class ActivityController extends Controller
     private const VALIDATION_RULES = [
         'title' => 'required|min:5|max:50',
         'description' => 'max:500',
-        'location' => 'max:50',
-        'starts_at' => 'required|date',
-        'ends_at' => 'required|date'
+        'location' => 'max:50'
+        //'starts_at' => 'required|date',
+        //'ends_at' => 'required|date'
     ];
 
     public function index(string $startingOn)
@@ -31,14 +31,14 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, VALIDATION_RULES);
+        $this->validate($request, self::VALIDATION_RULES);
 
         return Activity::create([
             'title' => request('title'),
             'description' => request('description'),
             'location' => request('location'),
-            'starts_at' => request('starts_at'),
-            'ends_at' => request('ends_at')
+            //'starts_at' => request('starts_at'),
+            //'ends_at' => request('ends_at')
         ]);
     }
 
@@ -62,14 +62,14 @@ class ActivityController extends Controller
      */
     public function update(Request $request, Activity $activity)
     {
-        $this->validate($request, VALIDATION_RULES);
+        $this->validate($request, self::VALIDATION_RULES);
 
         $activity->update([
             'title' => request('title'),
             'description' => request('description'),
-            'location' => request('location'),
-            'starts_at' => request('starts_at'),
-            'ends_at' => request('ends_at')
+            'location' => request('location')
+            //'starts_at' => request('starts_at'),
+            //'ends_at' => request('ends_at')
         ]);
     }
 
