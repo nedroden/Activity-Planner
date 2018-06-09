@@ -25,4 +25,8 @@ export class ActivityViewComponent implements OnInit {
             this.activity = activity;
         });
     }
+
+    delete(): void {
+        this._activityService.delete(this.id);
+    }
 }

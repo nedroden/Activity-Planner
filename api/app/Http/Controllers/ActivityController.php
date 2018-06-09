@@ -11,14 +11,13 @@ class ActivityController extends Controller
         'title' => 'required|min:5|max:50',
         'description' => 'max:500',
         'location' => 'max:50'
-        //'starts_at' => 'required|date',
-        //'ends_at' => 'required|date'
     ];
 
     public function index(string $startingOn)
     {
         return response()->json(Activity::with('attachments')
             ->whereDate('starts_at', $startingOn)
+            ->orderBy('starts_at', 'asc')
             ->get()
         );
     }
@@ -36,9 +35,10 @@ class ActivityController extends Controller
         $startsAt = '';
         $endsAt = '';
 
-        $dateCheck = $this->parseStartAndEndDates($startsAt, $endsAt);
+        $startingDateCheck = $this->parseStartAndEndDates('starting', $startsAt);
+        $endDateCheck = $this->parseStartAndEndDates('end', $endsAt);
 
-        if (!empty($dateCheck))
+        if (!empty($startingDateCheck) || !empty($endDateCheck))
             return;
 
         return Activity::create([
@@ -72,12 +72,21 @@ class ActivityController extends Controller
     {
         $this->validate($request, self::VALIDATION_RULES);
 
+        $startsAt = '';
+        $endsAt = '';
+
+        $startingDateCheck = $this->parseStartAndEndDates('starting', $startsAt);
+        $endDateCheck = $this->parseStartAndEndDates('end', $endsAt);
+
+        if (!empty($startingDateCheck) || !empty($endDateCheck))
+            return;
+
         $activity->update([
             'title' => request('title'),
             'description' => request('description'),
-            'location' => request('location')
-            //'starts_at' => request('starts_at'),
-            //'ends_at' => request('ends_at')
+            'location' => request('location'),
+            'starts_at' => $startsAt,
+            'ends_at' => $endsAt
         ]);
     }
 
@@ -89,28 +98,19 @@ class ActivityController extends Controller
      */
     public function destroy(Activity $activity)
     {
-        $activity->destroy();
+        return $activity->destroy($activity->id);
     }
 
-    private function parseStartAndEndDates(string &$start, string &$end) : ?string {
+    private function parseStartAndEndDates(string $prefix, string &$result) : ?string
+    {
         $dateRegex = '/([a-zA-Z0-9]{4})\-([a-zA-Z0-9]{2})\-([a-zA-Z0-9]{2})/';
         $timeRegex = '/([a-zA-Z0-9]{2})\:([a-zA-Z0-9]{2})/';
 
-        $startingDate = request('startingDate');
-        $startingTime = request('startingTime');
+        $dateInput = request($prefix . 'Date');
+        $timeInput = request($prefix . 'Time');
 
-        $endDate = request('endDate');
-        $endTime = request('endTime');
-
-        $startingMatches = [];
-        $endMatches = [];
-
-        if (preg_match($dateRegex, $startingDate) && preg_match($dateRegex, $endDate) &&
-            preg_match($timeRegex, $startingTime) && preg_match($timeRegex, $endTime)) {
-
-            $start = sprintf('%s %s:00', $startingDate, $startingTime);
-            $end = sprintf('%s %s:00', $endDate, $endTime);
-        }
+        if (preg_match($dateRegex, $dateInput) && preg_match($timeRegex, $timeInput))
+            $result = sprintf('%s %s:00', $dateInput, $timeInput);
         else
             return 'Invalid date/time format';
 

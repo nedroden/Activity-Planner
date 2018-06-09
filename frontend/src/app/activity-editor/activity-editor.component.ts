@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Activity } from '../activity';
 import { ActivityService } from '../activity.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-activity-editor',
@@ -15,7 +15,8 @@ export class ActivityEditorComponent implements OnInit {
     isNewArticle: boolean = true;
 
     constructor(private _activityService: ActivityService,
-                private _activatedRoute: ActivatedRoute) {
+                private _activatedRoute: ActivatedRoute,
+                private _router: Router) {
         this.id = -1;
     }
 
@@ -47,6 +48,6 @@ export class ActivityEditorComponent implements OnInit {
 
     saveActivity(e): void {
         let fields = ['title', 'location', 'startingDate', 'startingTime', 'endDate', 'endTime', 'description'];
-        this._activityService.update(this.id, fields, (result) => console.log(result));
+        this._activityService.update(this.id, fields, result => this._router.navigateByUrl('/activity/' + result.id));
     }
 }

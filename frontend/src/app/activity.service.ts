@@ -12,10 +12,11 @@ export class ActivityService {
     constructor(private _http: HttpClient) { }
 
     public getActivities(date: Date): Observable<Activity[]> {
-        return interval(5000)
+        return this._http.get<Activity[]>('http://localhost:8000/activities/' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+        /*return interval(5000)
             .pipe(
                 concatMap(() => this._http.get<Activity[]>('http://localhost:8000/activities/' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()))
-            );
+            );*/
     }
 
     public getActivity(id: number): Observable<Activity> {
@@ -34,5 +35,9 @@ export class ActivityService {
         this._http.post('http://localhost:8000' + url, payload, {headers: headers}).subscribe(response => callback(response));
 
         return true;
+    }
+
+    public delete(id: number) {
+        this._http.get('http://localhost:8000/activity/' + id + '/delete').subscribe(response => console.log(response));
     }
 }
