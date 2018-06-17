@@ -17,6 +17,7 @@ class CreateAttachmentsTable extends Migration
             $table->increments('id');
             $table->integer('activity_id')->unsigned();
             $table->string('filename');
+            $table->string('uploaded_name');
             $table->timestamps();
         });
     }

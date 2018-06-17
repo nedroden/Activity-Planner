@@ -7,4 +7,7 @@ Route::group(['middleware' => 'api'], function() {
 
     Route::post('/activities', 'ActivityController@store');
     Route::post('/activity/{activity}', 'ActivityController@update');
+
+    Route::get('/attachment/{attachment}/delete', 'AttachmentController@destroy');
+    Route::get('/attachment/{attachment}', 'AttachmentController@show');
 });

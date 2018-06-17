@@ -23,21 +23,42 @@ export class ActivityService {
         return this._http.get<Activity>('http://localhost:8000/activity/' + id);
     }
 
-    public update(id: number, fields: string[], callback: Function = function(response) {}): boolean {
-        let payload = {};
+    public update(id: number, fields: string[], onSuccess: Function = response => response, onFailure: Function = error => error): boolean {
+        let payload = new FormData();
         let headers = new HttpHeaders();
 
-        fields.forEach(field => payload[field] = (<HTMLInputElement>document.getElementById(field + 'Input')).value);
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        fields.forEach(field => {
+            let input = <HTMLInputElement>document.getElementById(field + 'Input');
+            let value;
+
+            switch (input.type) {
+                case 'file':
+                    for (let i = 0; i < input.files.length; i++)
+                        payload.append('attachments[]', input.files[i]);
+
+                    break;
+                default:
+                    payload.append(field, input.value);
+            }
+        });
+
+        headers.append('Content-Type', 'multipart/form-data');
 
         let url = id == -1 ? '/activities' : '/activity/' + id;
 
-        this._http.post('http://localhost:8000' + url, payload, {headers: headers}).subscribe(response => callback(response));
+        this._http.post('http://localhost:8000' + url, payload, {headers: headers}).subscribe(
+            response => onSuccess(response),
+            error => onFailure(error)
+        );
 
         return true;
     }
 
     public delete(id: number) {
         this._http.get('http://localhost:8000/activity/' + id + '/delete').subscribe(response => console.log(response));
+    }
+
+    public deleteAttachment(id: number) {
+        this._http.get('http://localhost:8000/attachment/' + id + '/delete').subscribe(response => console.log(response));
     }
 }

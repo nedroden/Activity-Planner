@@ -1,23 +1,37 @@
-<div class="col-sm-3">
-    <div class="card">
-        <img class="card-img-top" src="http://wallpoper.com/images/00/36/08/11/green-abstract_00360811.jpg" alt="{{ activity.title }}" />
+<div class="container-fluid">
+    <div class="row">
+        <div class="float-left col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ activity.title }}</h5>
+                    <p class="card-text">{{ activity.description }}</p>
+                </div>
 
-        <div class="card-body">
-            <h5 class="card-title">{{ activity.title }}</h5>
-            <p class="card-text">{{ activity.description }}</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Location:</strong> {{ activity.location }}</li>
+                    <li class="list-group-item">
+                        <strong>Starts at:</strong>
+                        {{ activity.starts_at.toLocaleString() }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Ends at:</strong>
+                        {{ activity.ends_at.toLocaleString() }}
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Location:</strong> {{ activity.location }}</li>
-            <li class="list-group-item">
-                <strong>Starts at:</strong>
-                {{ activity.starts_at.toLocaleString() }}
-            </li>
-            <li class="list-group-item">
-                <strong>Ends at:</strong>
-                {{ activity.ends_at.toLocaleString() }}
-            </li>
-        </ul>
+        <div class="float-right col-sm-5">
+            <h2>Attachments</h2>
+            <ul id="attachments">
+                <li *ngFor="let attachment of activity.attachments">
+                    <a href="http://localhost:8000/attachment/{{ attachment.id }}">{{ attachment.filename }}</a><br />
+                    <small>Added on {{ attachment.created_at }}</small>
+                </li>
+            </ul>
+        </div>
+
+        <br style="clear: both;" />
     </div>
 </div>
 

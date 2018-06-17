@@ -10,6 +10,10 @@ export class Activity {
     start: string = '';
     end: string = '';
 
-    start_date_value: string = '';
-    end_date_value: string = '';
+    attachments = [];
+
+    start_date_value: string;
+    start_time_value: string;
+    end_date_value: string;
+    end_time_value: string;
 }

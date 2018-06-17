@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Activity;
+use App\{Activity, Attachment};
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -56,9 +56,9 @@ class ActivityController extends Controller
      * @param  \App\Activity $activity
      * @return \Illuminate\Http\Response
      */
-    public function show(Activity $activity)
+    public function show(int $id)
     {
-        return response()->json($activity);
+        return response()->json(Activity::with('attachments')->where('id', $id)->first());
     }
 
     /**
@@ -88,6 +88,11 @@ class ActivityController extends Controller
             'starts_at' => $startsAt,
             'ends_at' => $endsAt
         ]);
+
+        if (!empty(request('attachments')))
+            $this->handleAttachments(request('attachments'), $activity);
+
+        return response()->json($activity);
     }
 
     /**
@@ -115,5 +120,17 @@ class ActivityController extends Controller
             return 'Invalid date/time format';
 
         return null;
+    }
+
+    private function handleAttachments(array $attachments, Activity $activity) : void {
+        foreach ($attachments as $attachment) {
+            $uploadedName = $attachment->store('attachments');
+
+            Attachment::create([
+                'activity_id' => $activity->id,
+                'filename' => $attachment->getClientOriginalName(),
+                'uploaded_name' => $uploadedName
+            ]);
+        }
     }
 }
