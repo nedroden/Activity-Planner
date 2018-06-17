@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
 import { ActivityEditorComponent } from './activity-editor/activity-editor.component';
 import { ActivityViewComponent } from './activity-view/activity-view.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 const routes: Routes = [
     {
@@ -54,7 +55,9 @@ const routes: Routes = [
                 enableTracing: false
             }
         ),
-        HttpClientModule
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

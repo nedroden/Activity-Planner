@@ -3,19 +3,25 @@
     <div class="row">
         <div class="mt-sm-3 col-12">
             <div id="error"></div>
-            <form id="editor" (submit)="saveActivity(event)">
+            <form id="editor" (submit)="saveActivity(event)" [formGroup]="editorForm">
                 <div class="float-left col-md-5">
+                    <small class="text-danger" *ngIf="editorForm.get('title').hasError('required') && editorForm.get('title').touched">You must enter a title.</small>
+                    <small class="text-danger" *ngIf="editorForm.get('title').hasError('minlength') && editorForm.get('title').touched">The title is too short. It must be at least 5 characters long.</small>
+                    <small class="text-danger" *ngIf="editorForm.get('title').hasError('maxlength')">The title is too long. It cannot consist of more than 50 characters.</small>
+
                     <div class="form-group">
                         <label for="titleInput">Activity title</label>
                         <div>
-                            <input type="text" class="form-control" id="titleInput" placeholder="New activity" value="{{ isNewArticle ? '' : activity.title }}" />
+                            <input type="text" class="form-control" id="titleInput" placeholder="New activity" value="{{ isNewArticle ? '' : activity.title }}" formControlName="title" />
                         </div>
                     </div>
+
+                    <small class="text-danger" *ngIf="editorForm.get('location').hasError('maxlength') && editorForm.get('location').touched">The location name is too long. It cannot consist of more than 50 characters.</small>
 
                     <div class="form-group">
                         <label for="locationInput">Location</label>
                         <div>
-                            <input type="text" class="form-control" id="locationInput" placeholder="Location" value="{{ isNewArticle ? '' : activity.location }}" />
+                            <input type="text" class="form-control" id="locationInput" placeholder="Location" value="{{ isNewArticle ? '' : activity.location }}" formControlName="location" />
                         </div>
                     </div>
 
@@ -37,10 +43,12 @@
                 </div>
 
                 <div class="float-right col-md-6">
+                    <small class="text-danger" *ngIf="editorForm.get('description').hasError('maxlength')">The description is too long. It cannot consist of more than 50 characters.</small>
+
                     <div class="form-group">
                         <label for="descriptionInput">Description</label>
                         <div>
-                            <textarea class="form-control" id="descriptionInput" placeholder="New activity" rows="10">{{ isNewArticle ? '' : activity.description }}</textarea>
+                            <textarea class="form-control" id="descriptionInput" placeholder="New activity" rows="10" formControlName="description">{{ isNewArticle ? '' : activity.description }}</textarea>
                         </div>
                     </div>
 

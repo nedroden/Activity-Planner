@@ -2,6 +2,7 @@ export class Activity {
     id: number = 0;
     title: string;
     description: string;
+    location: string;
 
     // @todo Replace with Date
     starts_at: Date;

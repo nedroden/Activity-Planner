@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Activity } from '../activity';
 import { ActivityService } from '../activity.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { two_digits, trigger_notification } from '../../util';
 
@@ -16,10 +17,19 @@ export class ActivityEditorComponent implements OnInit {
 
     isNewArticle: boolean = true;
 
+    editorForm;
+
     constructor(private _activityService: ActivityService,
                 private _activatedRoute: ActivatedRoute,
-                private _router: Router) {
+                private _router: Router,
+                private _formBuilder: FormBuilder) {
         this.id = -1;
+
+        this.editorForm = this._formBuilder.group({
+            title: new FormControl('', Validators.compose([Validators.required, Validators.minLength(5)])),
+            location: new FormControl('', Validators.compose([Validators.maxLength(50)])),
+            description: new FormControl('', Validators.compose([Validators.maxLength(500)]))
+        });
     }
 
     ngOnInit() {
