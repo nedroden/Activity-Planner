@@ -3,7 +3,7 @@ import { Activity } from '../activity';
 import { ActivityService } from '../activity.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { two_digits, trigger_error } from '../../util';
+import { two_digits, trigger_notification } from '../../util';
 
 @Component({
   selector: 'app-activity-editor',
@@ -55,12 +55,13 @@ export class ActivityEditorComponent implements OnInit {
         let fields = ['title', 'location', 'startingDate', 'startingTime', 'endDate', 'endTime', 'description', 'attachments'];
         this._activityService.update(this.id, fields,
             result => this._router.navigateByUrl('/activity/' + result.id),
-            error => trigger_error('error', 'Could not save activity')
+            error => trigger_notification('error', 'Could not save activity')
         );
     }
 
     deleteAttachment(id: number): void {
         document.getElementById('attachment-' + id).remove();
         this._activityService.deleteAttachment(id);
+        trigger_notification('error', 'The attachment was deleted', 4000, 'success');
     }
 }

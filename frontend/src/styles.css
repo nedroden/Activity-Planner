@@ -34,3 +34,8 @@ h3 {
 h4 {
     font-size: 110%;
 }
+
+/* Cursor styles */
+.pointer {
+    cursor: pointer;
+}

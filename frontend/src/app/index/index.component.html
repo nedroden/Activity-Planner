@@ -1,6 +1,10 @@
 <div class="container-fluid">
     <div class="float-left col-sm-3">
-        <h2>June 2018</h2>
+        <h2>
+            Week: {{ week_start_date.getMonth() + 1 }}/{{ week_start_date.getDate() }} {{ week_start_date.getFullYear() }}
+            - {{ week_end_date.getMonth() + 1 }}/{{ week_end_date.getDate() }} {{ week_end_date.getFullYear() }}
+            <i class="fa fa-refresh ml-sm-2 pointer" (click)="updateSubscriptions()"></i>
+        </h2>
     </div>
     <div class="float-right col-sm-5 text-right">
         <div class="btn-group-sm">

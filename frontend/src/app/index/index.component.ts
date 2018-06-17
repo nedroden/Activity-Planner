@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Activity } from '../activity';
 import { ActivityService } from '../activity.service';
 
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
+import { two_digits } from '../../util';
 
 @Component({
   selector: 'app-index',
@@ -16,8 +17,11 @@ export class IndexComponent implements OnInit {
 
     relativeWeek: number = 0;
 
+    week_start_date: Date;
+    week_end_date: Date;
+
     // Used for adding or removing a week from a timestamp.
-    weeksToMilliSeconds = (modifier: number) => 60 * 60 * 24 * modifier * 1000;
+    daysToMilliSeconds = (modifier: number) => 60 * 60 * 24 * modifier * 1000;
 
     constructor(private _activityService: ActivityService) {
         this.setupDays();
@@ -34,8 +38,10 @@ export class IndexComponent implements OnInit {
                 activities: []
             });
 
-            this.days[i].date.setTime(firstDayDate.getTime() + this.weeksToMilliSeconds(i));
+            this.days[i].date.setTime(firstDayDate.getTime() + this.daysToMilliSeconds(i));
         }
+
+        this.updateFirstLastDays();
     }
 
     ngOnInit(): void {
@@ -47,9 +53,10 @@ export class IndexComponent implements OnInit {
 
     changeWeek(modifier: number): void {
         for (let day in this.days)
-            this.days[day].date.setTime(this.days[day].date.getTime() + this.weeksToMilliSeconds(modifier * 7));
+            this.days[day].date.setTime(this.days[day].date.getTime() + this.daysToMilliSeconds(modifier * 7));
 
         this.updateSubscriptions();
+        this.updateFirstLastDays();
     }
 
     updateSubscriptions(): void {
@@ -60,11 +67,16 @@ export class IndexComponent implements OnInit {
                 let endsAt = new Date(activity.ends_at);
 
                 // Credits to https://stackoverflow.com/questions/8043026/how-to-format-numbers-by-prepending-0-to-single-digit-numbers#8043061
-                activity.start = ('0' + startsAt.getHours()).slice(-2) + ':' + ('0' + startsAt.getMinutes()).slice(-2);
-                activity.end = ('0' + endsAt.getHours()).slice(-2) + ':' + ('0' + endsAt.getMinutes()).slice(-2);
+                activity.start = two_digits(startsAt.getHours()) + ':' + two_digits(startsAt.getMinutes());
+                activity.end = two_digits(endsAt.getHours()) + ':' + two_digits(endsAt.getMinutes());
             }
 
             day.activities = activities;
         });
+    }
+
+    updateFirstLastDays(): void {
+        this.week_start_date = this.days[0].date;
+        this.week_end_date = this.days[6].date;
     }
 }

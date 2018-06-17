@@ -23,12 +23,17 @@
 
         <div class="float-right col-sm-5">
             <h2>Attachments</h2>
-            <ul id="attachments">
-                <li *ngFor="let attachment of activity.attachments">
-                    <a href="http://localhost:8000/attachment/{{ attachment.id }}">{{ attachment.filename }}</a><br />
-                    <small>Added on {{ attachment.created_at }}</small>
-                </li>
-            </ul>
+            <div *ngIf="activity.attachments.length">
+                <ul id="attachments">
+                    <li *ngFor="let attachment of activity.attachments">
+                        <a href="http://localhost:8000/attachment/{{ attachment.id }}">{{ attachment.filename }}</a><br />
+                        <small>Added on {{ attachment.created_at }}</small>
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="!activity.attachments.length">
+                There are no attachments associated with this activity.
+            </div>
         </div>
 
         <br style="clear: both;" />
