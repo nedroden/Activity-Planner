@@ -7,6 +7,8 @@
     margin-bottom: 5px;
     font-size: 85%;
     background: #779b78;
+    border-left: 6px solid #5a755b;
+    border-radius: 2px;
     color: #e3f7e4;
     padding: 5px;
 }
