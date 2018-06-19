@@ -5,8 +5,8 @@ export class Activity {
     location: string;
 
     // @todo Replace with Date
-    starts_at: Date;
-    ends_at: Date;
+    starts_at: Date = new Date;
+    ends_at: Date = new Date;
 
     start: string = '';
     end: string = '';

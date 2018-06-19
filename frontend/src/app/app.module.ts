@@ -9,6 +9,7 @@ import { IndexComponent } from './index/index.component';
 import { ActivityEditorComponent } from './activity-editor/activity-editor.component';
 import { ActivityViewComponent } from './activity-view/activity-view.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
     {
@@ -37,6 +38,10 @@ const routes: Routes = [
                 component: ActivityEditorComponent
             }
         ]
+    },
+    {
+        path: '404',
+        component: NotFoundComponent
     }
 ];
 
@@ -45,7 +50,8 @@ const routes: Routes = [
         AppComponent,
         IndexComponent,
         ActivityEditorComponent,
-        ActivityViewComponent
+        ActivityViewComponent,
+        NotFoundComponent
     ],
     imports: [
         BrowserModule,

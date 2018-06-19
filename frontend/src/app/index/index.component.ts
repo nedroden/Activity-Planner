@@ -3,7 +3,7 @@ import { Activity } from '../activity';
 import { ActivityService } from '../activity.service';
 
 import { Observable } from 'rxjs';
-import { two_digits } from '../../util';
+import { two_digits, trigger_notification } from '../../util';
 
 @Component({
   selector: 'app-index',
@@ -61,18 +61,21 @@ export class IndexComponent implements OnInit {
 
     updateSubscriptions(): void {
         for (let day of this.days)
-           this._activityService.getActivities(day.date).subscribe(activities => {
-            for (let activity of activities) {
-                let startsAt = new Date(activity.starts_at);
-                let endsAt = new Date(activity.ends_at);
+            this._activityService.getActivities(day.date).subscribe(
+                activities => {
+                    for (let activity of activities) {
+                        let startsAt = new Date(activity.starts_at);
+                        let endsAt = new Date(activity.ends_at);
 
-                // Credits to https://stackoverflow.com/questions/8043026/how-to-format-numbers-by-prepending-0-to-single-digit-numbers#8043061
-                activity.start = two_digits(startsAt.getHours()) + ':' + two_digits(startsAt.getMinutes());
-                activity.end = two_digits(endsAt.getHours()) + ':' + two_digits(endsAt.getMinutes());
-            }
+                        // Credits to https://stackoverflow.com/questions/8043026/how-to-format-numbers-by-prepending-0-to-single-digit-numbers#8043061
+                        activity.start = two_digits(startsAt.getHours()) + ':' + two_digits(startsAt.getMinutes());
+                        activity.end = two_digits(endsAt.getHours()) + ':' + two_digits(endsAt.getMinutes());
+                    }
 
-            day.activities = activities;
-        });
+                    day.activities = activities;
+                },
+                error => trigger_notification('error', 'Could not load activities from the database (response code ' + error.status + ': ' + error.statusText + ')', -1)
+        );
     }
 
     updateFirstLastDays(): void {

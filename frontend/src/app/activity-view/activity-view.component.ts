@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Activity } from '../activity';
 import { ActivityService } from '../activity.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-activity-view',
@@ -13,17 +13,27 @@ export class ActivityViewComponent implements OnInit {
     activity: Activity;
 
     constructor(private _activityService: ActivityService,
-                private _activatedRoute: ActivatedRoute) {}
+                private _activatedRoute: ActivatedRoute,
+                private _router: Router) {}
 
     ngOnInit() {
+        this.activity = new Activity;
         this._activatedRoute.params.subscribe(params => this.id = params.id);
         
-        this._activityService.getActivity(this.id).subscribe(activity => {
-            activity.starts_at = new Date(activity.starts_at);
-            activity.ends_at = new Date(activity.ends_at);
+        this._activityService.getActivity(this.id).subscribe(
+            activity => {
+                if (Object.keys(activity).length === 0) {
+                    this._router.navigate(['/404']);
+                    return;
+                }
 
-            this.activity = activity;
-        });
+                activity.starts_at = new Date(activity.starts_at);
+                activity.ends_at = new Date(activity.ends_at);
+
+                this.activity = activity;
+            },
+            error => this._router.navigate(['/404'])
+        );
     }
 
     delete(): void {
