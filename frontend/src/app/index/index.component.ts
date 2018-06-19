@@ -67,7 +67,6 @@ export class IndexComponent implements OnInit {
                         let startsAt = new Date(activity.starts_at);
                         let endsAt = new Date(activity.ends_at);
 
-                        // Credits to https://stackoverflow.com/questions/8043026/how-to-format-numbers-by-prepending-0-to-single-digit-numbers#8043061
                         activity.start = two_digits(startsAt.getHours()) + ':' + two_digits(startsAt.getMinutes());
                         activity.end = two_digits(endsAt.getHours()) + ':' + two_digits(endsAt.getMinutes());
                     }

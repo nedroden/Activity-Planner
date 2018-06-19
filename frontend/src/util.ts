@@ -1,3 +1,6 @@
+/**
+ * Credits to https://stackoverflow.com/questions/8043026/how-to-format-numbers-by-prepending-0-to-single-digit-numbers#8043061
+ */
 export function two_digits(input: number): string {
     return ('0' + (input)).slice(-2);
 }
