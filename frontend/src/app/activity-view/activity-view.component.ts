@@ -3,6 +3,8 @@ import { Activity } from '../activity';
 import { ActivityService } from '../activity.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { trigger_notification } from '../../util';
+
 @Component({
   selector: 'app-activity-view',
   templateUrl: './activity-view.component.html'
@@ -37,6 +39,11 @@ export class ActivityViewComponent implements OnInit {
     }
 
     delete(): void {
-        this._activityService.delete(this.id);
+        this._activityService.delete(this.id,
+            response => trigger_notification('error', 'The activity was deleted', 4000, 'success'),
+            error => trigger_notification('error', 'Could not delete activity', 4000, 'danger')
+        );
+
+        this._router.navigate(['/']);
     }
 }

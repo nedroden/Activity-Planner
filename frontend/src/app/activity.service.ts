@@ -3,6 +3,7 @@ import { Observable, interval, pipe } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 import { Activity } from './activity';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -12,18 +13,22 @@ export class ActivityService {
     constructor(private _http: HttpClient) { }
 
     public getActivities(date: Date): Observable<Activity[]> {
-        return this._http.get<Activity[]>('http://localhost:8000/activities/' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
-        /*return interval(5000)
-            .pipe(
-                concatMap(() => this._http.get<Activity[]>('http://localhost:8000/activities/' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()))
-            );*/
+        return this._http.get<Activity[]>(environment.api_url + '/activities/' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+
+        /**
+         *  Uncomment to enable real-time data.
+         *  return interval(500)
+         *      .pipe(
+         *          concatMap(() => this._http.get<Activity[]>('http://localhost:8000/activities/' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()))
+         *  );
+         */
     }
 
     public getActivity(id: number): Observable<Activity> {
-        return this._http.get<Activity>('http://localhost:8000/activity/' + id);
+        return this._http.get<Activity>(environment.api_url + '/activity/' + id);
     }
 
-    public update(id: number, fields: string[], onSuccess: Function = response => response, onFailure: Function = error => error): boolean {
+    public update(id: number, fields: string[], onSuccess: Function = response => response, onFailure: Function = error => error): void {
         let payload = new FormData();
         let headers = new HttpHeaders();
 
@@ -44,21 +49,26 @@ export class ActivityService {
 
         headers.append('Content-Type', 'multipart/form-data');
 
+        // If the id is -1, which is a placeholder, we're dealing with a new article. Set the URL accordingly
         let url = id == -1 ? '/activities' : '/activity/' + id;
 
-        this._http.post('http://localhost:8000' + url, payload, {headers: headers}).subscribe(
+        this._http.post(environment.api_url + url, payload, {headers: headers}).subscribe(
             response => onSuccess(response),
             error => onFailure(error)
         );
-
-        return true;
     }
 
-    public delete(id: number) {
-        this._http.get('http://localhost:8000/activity/' + id + '/delete').subscribe(response => console.log(response));
+    public delete(id: number, onSuccess: Function = response => response, onFailure: Function = error => error): void {
+        this._http.get(environment.api_url + '/activity/' + id + '/delete').subscribe(
+            response => onSuccess(response),
+            error => onFailure(error)
+        );
     }
 
-    public deleteAttachment(id: number) {
-        this._http.get('http://localhost:8000/attachment/' + id + '/delete').subscribe(response => console.log(response));
+    public deleteAttachment(id: number, onSuccess: Function = response => response, onFailure: Function = error => error): void {
+        this._http.get(environment.api_url + '/attachment/' + id + '/delete').subscribe(
+            response => onSuccess(response),
+            error => onFailure(error)
+        );
     }
 }
