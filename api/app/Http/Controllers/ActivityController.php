@@ -41,13 +41,18 @@ class ActivityController extends Controller
         if (!empty($startingDateCheck) || !empty($endDateCheck))
             return;
 
-        return Activity::create([
+        $activity = Activity::create([
             'title' => request('title'),
             'description' => request('description'),
             'location' => request('location'),
             'starts_at' => $startsAt,
             'ends_at' => $endsAt
         ]);
+
+        if (!empty(request('attachments')))
+            $this->handleAttachments(request('attachments'), $activity);
+
+        return response()->json($activity);
     }
 
     /**
@@ -108,8 +113,8 @@ class ActivityController extends Controller
 
     private function parseStartAndEndDates(string $prefix, string &$result) : ?string
     {
-        $dateRegex = '/([a-zA-Z0-9]{4})\-([a-zA-Z0-9]{2})\-([a-zA-Z0-9]{2})/';
-        $timeRegex = '/([a-zA-Z0-9]{2})\:([a-zA-Z0-9]{2})/';
+        $dateRegex = '/([0-9]{4})\-([0-9]{2})\-([0-9]{2})/';
+        $timeRegex = '/([0-6][0-9])\:([0-6][0-9])/';
 
         $dateInput = request($prefix . 'Date');
         $timeInput = request($prefix . 'Time');

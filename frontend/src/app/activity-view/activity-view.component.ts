@@ -40,10 +40,11 @@ export class ActivityViewComponent implements OnInit {
 
     delete(): void {
         this._activityService.delete(this.id,
-            response => trigger_notification('error', 'The activity was deleted', 4000, 'success'),
+            response => {
+                this._router.navigate(['/index']);
+                trigger_notification('error', 'The activity was deleted', 4000, 'success');
+            },
             error => trigger_notification('error', 'Could not delete activity', 4000, 'danger')
         );
-
-        this._router.navigate(['/']);
     }
 }

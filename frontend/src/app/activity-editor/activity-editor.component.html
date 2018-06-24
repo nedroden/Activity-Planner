@@ -5,8 +5,8 @@
             <div id="error"></div>
             <form id="editor" (submit)="saveActivity(event)" [formGroup]="editorForm">
                 <div class="float-left col-md-5">
-                    <small class="text-danger" *ngIf="editorForm.get('title').hasError('required') && editorForm.get('title').touched">You must enter a title.</small>
-                    <small class="text-danger" *ngIf="editorForm.get('title').hasError('minlength') && editorForm.get('title').touched">The title is too short. It must be at least 5 characters long.</small>
+                    <small class="text-danger" *ngIf="editorForm.get('title').hasError('required') && editorForm.get('title').dirty">You must enter a title.</small>
+                    <small class="text-danger" *ngIf="editorForm.get('title').hasError('minlength') && editorForm.get('title').dirty">The title is too short. It must be at least 5 characters long.</small>
                     <small class="text-danger" *ngIf="editorForm.get('title').hasError('maxlength')">The title is too long. It cannot consist of more than 50 characters.</small>
 
                     <div class="form-group">
@@ -16,7 +16,7 @@
                         </div>
                     </div>
 
-                    <small class="text-danger" *ngIf="editorForm.get('location').hasError('maxlength') && editorForm.get('location').touched">The location name is too long. It cannot consist of more than 50 characters.</small>
+                    <small class="text-danger" *ngIf="editorForm.get('location').hasError('maxlength') && editorForm.get('location').dirty">The location is too long. It cannot consist of more than 50 characters.</small>
 
                     <div class="form-group">
                         <label for="locationInput">Location</label>
@@ -25,19 +25,23 @@
                         </div>
                     </div>
 
+                    <small class="text-danger" *ngIf="(!editorForm.get('startDateInput').valid && editorForm.get('startDateInput').dirty) || (!editorForm.get('startTimeInput').valid && editorForm.get('startTimeInput').dirty)">Invalid date/time input.</small>
+
                     <div class="form-group">
                         <label for="startingDateInput">Starting date</label>
                         <div>
-                            <input type="date" class="form-control" id="startingDateInput" value="{{ isNewArticle ? '' : activity.start_date_value }}" />
-                            <input type="text" class="form-control time-input" id="startingTimeInput" placeholder="00:00" maxlength="5" value="{{ isNewArticle ? '' : activity.start_time_value }}" />
+                            <input type="date" class="form-control" id="startingDateInput" value="{{ isNewArticle ? '' : activity.start_date_value }}" formControlName="startDateInput" />
+                            <input type="text" class="form-control time-input" id="startingTimeInput" placeholder="00:00" maxlength="5" value="{{ isNewArticle ? '' : activity.start_time_value }}" formControlName="startTimeInput" />
                         </div>
                     </div>
+
+                    <small class="text-danger" *ngIf="(!editorForm.get('endDateInput').valid && editorForm.get('endDateInput').dirty) || (!editorForm.get('endTimeInput').valid && editorForm.get('endTimeInput').dirty)">Invalid date/time input.</small>
 
                     <div class="form-group">
                         <label for="endDateInput">End date</label>
                         <div>
-                            <input type="date" class="form-control" id="endDateInput" value="{{ isNewArticle ? '' : activity.start_date_value }}" />
-                            <input type="text" class="form-control time-input" id="endTimeInput" placeholder="00:00" maxlength="5" value="{{ isNewArticle ? '' : activity.end_time_value }}" />
+                            <input type="date" class="form-control" id="endDateInput" value="{{ isNewArticle ? '' : activity.start_date_value }}" formControlName="endDateInput" />
+                            <input type="text" class="form-control time-input" id="endTimeInput" placeholder="00:00" maxlength="5" value="{{ isNewArticle ? '' : activity.end_time_value }}" formControlName="endTimeInput" />
                         </div>
                     </div>
                 </div>
@@ -55,7 +59,7 @@
                     <h2>Attachments</h2>
                     <ul id="attachments" *ngIf="!isNewArticle == true">
                         <li *ngFor="let attachment of activity.attachments" id="attachment-{{ attachment.id }}">
-                            <a href="http://localhost:8000/attachment/{{ attachment.id }}/download">{{ attachment.filename }}</a><br />
+                            <a href="{{ environment.api_url}}/attachment/{{ attachment.id }}/download">{{ attachment.filename }}</a><br />
                             <small>
                                 Added on {{ attachment.created_at }} |
                                 Click <strong><a (click)="deleteAttachment(attachment.id)">here</a></strong> to remove
