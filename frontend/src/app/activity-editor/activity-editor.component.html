@@ -3,7 +3,7 @@
     <div class="row">
         <div class="mt-sm-3 col-12">
             <div id="error"></div>
-            <form id="editor" (submit)="saveActivity(event)" [formGroup]="editorForm">
+            <form role="form" id="editor" name="editor" (submit)="saveActivity(event)" [formGroup]="editorForm" novalidate>
                 <div class="float-left col-md-5">
                     <small class="text-danger" *ngIf="editorForm.get('title').hasError('required') && editorForm.get('title').dirty">You must enter a title.</small>
                     <small class="text-danger" *ngIf="editorForm.get('title').hasError('minlength') && editorForm.get('title').dirty">The title is too short. It must be at least 5 characters long.</small>
@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label for="titleInput">Activity title</label>
                         <div>
-                            <input type="text" class="form-control" id="titleInput" placeholder="New activity" value="{{ isNewArticle ? '' : activity.title }}" formControlName="title" />
+                            <input type="text" class="form-control" id="titleInput" placeholder="New activity" formControlName="title" ng-model="title" />
                         </div>
                     </div>
 
@@ -21,27 +21,27 @@
                     <div class="form-group">
                         <label for="locationInput">Location</label>
                         <div>
-                            <input type="text" class="form-control" id="locationInput" placeholder="Location" value="{{ isNewArticle ? '' : activity.location }}" formControlName="location" />
+                            <input type="text" class="form-control" id="locationInput" placeholder="Location" formControlName="location" ng-model="location" />
                         </div>
                     </div>
 
-                    <small class="text-danger" *ngIf="(!editorForm.get('startDateInput').valid && editorForm.get('startDateInput').dirty) || (!editorForm.get('startTimeInput').valid && editorForm.get('startTimeInput').dirty)">Invalid date/time input.</small>
+                    <small class="text-danger" *ngIf="(!editorForm.get('startDate').valid && editorForm.get('startDate').dirty) || (!editorForm.get('startTime').valid && editorForm.get('startTime').dirty)">Invalid date/time input.</small>
 
                     <div class="form-group">
                         <label for="startingDateInput">Starting date</label>
                         <div>
-                            <input type="date" class="form-control" id="startingDateInput" value="{{ isNewArticle ? '' : activity.start_date_value }}" formControlName="startDateInput" />
-                            <input type="text" class="form-control time-input" id="startingTimeInput" placeholder="00:00" maxlength="5" value="{{ isNewArticle ? '' : activity.start_time_value }}" formControlName="startTimeInput" />
+                            <input type="date" class="form-control" id="startingDateInput" formControlName="startDate" ng-model="startDate" />
+                            <input type="text" class="form-control time-input" id="startingTimeInput" placeholder="00:00" maxlength="5" formControlName="startTime" ng-model="startTime" />
                         </div>
                     </div>
 
-                    <small class="text-danger" *ngIf="(!editorForm.get('endDateInput').valid && editorForm.get('endDateInput').dirty) || (!editorForm.get('endTimeInput').valid && editorForm.get('endTimeInput').dirty)">Invalid date/time input.</small>
+                    <small class="text-danger" *ngIf="(!editorForm.get('endDate').valid && editorForm.get('endDate').dirty) || (!editorForm.get('endTime').valid && editorForm.get('endTime').dirty)">Invalid date/time input.</small>
 
                     <div class="form-group">
                         <label for="endDateInput">End date</label>
                         <div>
-                            <input type="date" class="form-control" id="endDateInput" value="{{ isNewArticle ? '' : activity.start_date_value }}" formControlName="endDateInput" />
-                            <input type="text" class="form-control time-input" id="endTimeInput" placeholder="00:00" maxlength="5" value="{{ isNewArticle ? '' : activity.end_time_value }}" formControlName="endTimeInput" />
+                            <input type="date" class="form-control" id="endDateInput" formControlName="endDate" ng-model="endDate" />
+                            <input type="text" class="form-control time-input" id="endTimeInput" placeholder="00:00" maxlength="5" formControlName="endTime" ng-model="endTime" />
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     <div class="form-group">
                         <label for="descriptionInput">Description</label>
                         <div>
-                            <textarea class="form-control" id="descriptionInput" placeholder="New activity" rows="10" formControlName="description">{{ isNewArticle ? '' : activity.description }}</textarea>
+                            <textarea class="form-control" id="descriptionInput" placeholder="New activity" rows="10" formControlName="description" ng-model="description">{{ isNewArticle ? '' : activity.description }}</textarea>
                         </div>
                     </div>
 
@@ -75,7 +75,7 @@
 
                 <div class="btn-group mt-sm-3">
                     <button type="button" class="btn btn-light" routerLink="/activity/{{ id }}">Back to activity</button>
-                    <button id="submit_form" type="submit" class="btn btn-primary">Save activity</button>
+                    <button id="submit_form" type="submit" class="btn btn-primary" [disabled]="editorForm.status === 'INVALID'">Save activity</button>
                 </div>
             </form>
         </div>
