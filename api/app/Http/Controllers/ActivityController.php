@@ -63,7 +63,9 @@ class ActivityController extends Controller
      */
     public function show(int $id)
     {
-        return response()->json(Activity::with('attachments')->where('id', $id)->first());
+        $record = Activity::with('attachments')->where('id', $id)->first();
+
+        return !empty($record) ? response()->json($record) : abort(404);
     }
 
     /**
